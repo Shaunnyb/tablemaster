@@ -83,7 +83,9 @@ sap.ui.define([
 				MessageBox.alert("No Attachment Service. Please check the config");
 				return;
 			}
-			window.open(this.oController.serviceURL + service + "?" + downloadURL);
+			//"/EZYCOMMERCE_SERVER_NATIVE"
+			window.open("/EZYCOMMERCE_SERVER_NATIVE" + service + "?" + downloadURL);
+//			window.open(this.oController.serviceURL + service + "?" + downloadURL);
 		},
 
 		createDialog: function (title) {

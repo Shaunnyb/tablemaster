@@ -7,8 +7,10 @@ sap.ui.define([
 	"brs_demo_tablemaster/controller/DetailView",
 	"brs_demo_tablemaster/utilities/Utilities",
 	"brs_demo_tablemaster/controller/ActionClass",
-	"brs_demo_tablemaster/utilities/Controls"
-], function (Controller, MessageBox, JSONModel, FilterPane, DetailView, Utilities, ActionClass, Controls) {
+	"brs_demo_tablemaster/utilities/Controls",
+	"sap/ui/core/util/Export",
+	"sap/ui/core/util/ExportTypeCSV"
+], function (Controller, MessageBox, JSONModel, FilterPane, DetailView, Utilities, ActionClass, Controls, Export, ExportTypeCSV) {
 	"use strict";
 
 	return Controller.extend("brs_demo_tablemaster.controller.TableMaster", {
@@ -139,7 +141,7 @@ sap.ui.define([
 			var selectedVariant;
 			isuv = (isuv === undefined) ? "App" : isuv;
 			$.ajax({
-				url: this.serviceURL + this.basePath + "/HAA/services/GetConfig.xsjs?AppID=" + APP_ID,
+				url: this.serviceURL + "/getConfig.xsjs?AppID=" + APP_ID, //this.serviceURL + this.basePath + "/HAA/services/GetConfig.xsjs?AppID=" + APP_ID,
 				type: "GET",
 				context: this,
 				contentType: "application/json",
@@ -907,8 +909,13 @@ sap.ui.define([
 					json: true,
 					defaultCountMode: sap.ui.model.odata.CountMode.None
 				};
-
+				//nodeJS Native
+				if (service.substring(0,3) === "/v2") {
 				tableDataModel = new sap.ui.model.odata.ODataModel(this.serviceURL + service, modelObj);
+				} else {
+				tableDataModel = new sap.ui.model.odata.ODataModel("/EZYCOMMERCE_SERVER_NATIVE" + service, modelObj);
+				}
+				//end new function
 				tableDataModel.attachMetadataLoaded(function (oMetadata) {
 					console.log("Metadata loaded");
 				});
@@ -1372,7 +1379,8 @@ sap.ui.define([
 			var table = oEvt.getSource();
 			var queryInfo = table.data("_queryInfo");
 			var varSel = this.getView().byId("idBRSTableMasterVariantSelect");
-			var variantData = varSel.getSelectedItem().data("variantData");
+			//TO below line commented, as is doesn't seem to be used:
+			//var variantData = varSel.getSelectedItem().data("variantData");
 			//set width of the items table
 			this.getView().byId("idBRSTableMasterScrollContainertBody").setWidth("auto").setHeight("auto");
 			// this.getView().byId("idBRSTableMasterScrollContainertBody").setHeight("auto");
@@ -1908,22 +1916,116 @@ sap.ui.define([
 			// this._exportFrgmt.openBy(oSrc);
 			this._exportCSV(oSrc);
 		},
-
+// additional code to export CSV
+	_csvDataExport: function(exportURL) {
+			//call again for data - exportURL
+							$.ajax({
+								url: "/EZYCOMMERCE_SERVER" + exportURL,
+								type: "GET",
+								async: false,
+								context: this,
+								contentType: "application/json",
+								success: function (oSucc) {
+			//
+										var gridTable = this.getView().byId("idBRSTableMasterVariantReponsiveDataTable");
+										var oModel = gridTable.getModel();
+										var modelData = oSucc.d;
+										// JSON MODEL!!!!
+										var jsonModel = new sap.ui.model.json.JSONModel();
+										jsonModel.setData(modelData);
+									//	var oCols = gridTable.getColumns();
+										var oExport = new Export({
+							
+											exportType: new ExportTypeCSV({
+												fileExtension: "csv",
+												separatorChar: ","
+											}),
+							//Certificate,CustomerName,HeatAggr,BundleAggr,Date,DeliveryNo,SalesOrder,CustomerOrder,MaterialAggr
+											models: jsonModel,
+											rows: {
+												path: "/results"
+											},				
+											columns: [{
+												name: "Certificate",
+												template: {
+													content: "{Certificate}"
+												}
+											}, {
+												name: "CustomerName",
+												template: {
+													content: "{CustomerName}"
+												}
+											}, {
+												name: "Heat No",
+												template: {
+													content: "{HeatAggr}"
+												}
+											}, {
+												name: "Batch Number",
+												template: {
+													content: "{BundleAggr}"
+												}
+											},{
+												name: "Certificate Date",
+												template: {
+													content: "{Date}"
+												}
+											},{
+												name: "Despatch Advice",
+												template: {
+													content: "{DeliveryNo}"
+												}
+											},{
+												name: "Sales Order",
+												template: {
+													content: "{SalesOrder}"
+												}
+											},{
+												name: "Customer Order",
+												template: {
+													content: "{CustomerOrder}"
+												}
+											},{
+												name: "Material",
+												template: {
+													content: "{MaterialAggr}"
+												}
+											}
+											]
+										});
+										console.log(oExport);
+										oExport.saveFile().catch(function(oError) {
+											console.log(oError);
+										}).then(function() {
+											oExport.destroy();
+										});		
+								},
+								error: function (oErr) {
+									console.log(oErr);
+								}
+							});			
+			
+	
+		},
+//
 		_exportCSV: function (oCtrl) {
-			var exportURL = this.variantData.Service + "/" + this.variantData.ServEntity + "?$top=100000&$skip=0&AppID=" + this.variantData.AppID +
+			var exportURL = this.variantData.Service + this.variantData.ServEntity + "?$top=100000&$skip=0&AppID=" + this.variantData.AppID +
 				"&AppVariantID=" + this.variantData.AppVariantID + "&csv=true";
-
 			//create the Filter String if any
 			var filters = Utilities.getFilterPaneData(this, true);
 			var filterStr;
 			if (filters && filters.length && filters.length > 0) {
 				filterStr = Utilities._prepareFiltersAsString(filters, this);
 			}
-
 			if (filterStr && filterStr.length > 0) {
 				exportURL += "&$filter=" + filterStr;
 			}
-			window.open(this.serviceURL + exportURL);
+			// by pass processing for HANA:
+			if (this.variantData.ServEntity === 'TestCertificates') {
+				this._csvDataExport(exportURL);                      
+			} else {			
+			window.open("/EZYCOMMERCE_SERVER_NATIVE" + exportURL);
+			}
 		},
 
 		onExportSelection: function (oEvt) {

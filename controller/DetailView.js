@@ -30,8 +30,9 @@ sap.ui.define([
 				}
 				detailBox.setBusyIndicatorDelay(0);
 				detailBox.setBusy(true);
-				var detailViewConfigService = oController.serviceURL + this.oController.basePath + "/HAA/services/GetConfig.xsjs?DetailView=" +
-					variantData.DetailViewID;
+				var detailViewConfigService = oController.serviceURL + "/GetConfig.xsjs?DetailView=" + variantData.DetailViewID;
+		//		var detailViewConfigService = oController.serviceURL + this.oController.basePath + "/HAA/services/GetConfig.xsjs?DetailView=" +
+		//			variantData.DetailViewID;
 				$.ajax({
 					url: detailViewConfigService,
 					type: "GET",
@@ -260,17 +261,19 @@ sap.ui.define([
 				if (appID && appVariantID) {
 					dTbl.setBusy(true);
 					// jQuery.sap.delayedCall(0, this, function() {
-					var url = this.oController.serviceURL + this.oController.basePath + "/HAA/services/GetConfig.xsjs?AppID=" + appID +
-						"&AppVariantID=" + appVariantID;
+		//var url = this.oController.serviceURL + this.oController.basePath + "/HAA/services/GetConfig.xsjs?AppID=" + appID + "&AppVariantID=" + appVariantID;
+					var url = this.oController.serviceURL + "/GetConfig.xsjs?AppID=" + appID + "&AppVariantID=" + appVariantID;
 					$.ajax({
 						url: url,
 						type: "GET",
 						context: this,
 						contentType: "application/json",
 						success: function (oData) {
-							if (oData.results && oData.results.Variants && oData.results.Variants.length && oData.results.Variants.length > 0) {
-								var variantData = oData.results.Variants[0];
-								this.loadTable(variantData, dTbl);
+							if (oData && oData.Variants && oData.Variants.length && oData.Variants.length > 0) {
+								var Variants = oData.Variants;
+								var variantData = Variants.filter((Variants) => Variants.AppVariantID == appVariantID );
+								// var variantData = oData.Variants[0];
+								this.loadTable(variantData[0], dTbl);
 							}
 						},
 						error: function (oErr) {
@@ -308,7 +311,9 @@ sap.ui.define([
 				if (dTbl.getItems().length > 0) {
 					dTbl.destroyItems();
 				}
-				tableDataModel = new sap.ui.model.odata.v2.ODataModel(this.oController.serviceURL + service, modelObj);
+				
+				tableDataModel = new sap.ui.model.odata.v2.ODataModel("/EZYCOMMERCE_SERVER_NATIVE" + service, modelObj);
+				//tableDataModel = new sap.ui.model.odata.v2.ODataModel(this.oController.serviceURL + service, modelObj);
 
 				dTbl.setModel(tableDataModel);
 				dTbl.addCustomData(new sap.ui.core.CustomData({
@@ -497,7 +502,7 @@ sap.ui.define([
 				if (appID && appVariantID) {
 					this._dvPopup.setBusy(true);
 					// this._dvPopup.openBy(src);
-					var url = this.oController.serviceURL + this.oController.basePath + "/HAA/services/GetConfig.xsjs?AppID=" + appID +
+					var url = this.oController.serviceURL + "/GetConfig.xsjs?AppID=" + appID +
 						"&AppVariantID=" + appVariantID;
 					$.ajax({
 						url: url,
@@ -591,7 +596,8 @@ sap.ui.define([
 			},
 
 			getFormData: function (data, successCallBack, errCallBack) {
-				var service = this.oController.serviceURL + this.variantData.Service;
+				//var service = this.oController.serviceURL + this.variantData.Service;
+				var service = "/EZYCOMMERCE_SERVER_NATIVE" + this.variantData.Service;
 				var formModel = new ODataModel(service, {
 					json: true
 				});

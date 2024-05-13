@@ -11,14 +11,15 @@ sap.ui.define([
 		loadFilterUI: function (variantData, controller) {
 			this.controller = controller;
 			var filterPaneForm = controller.getView().byId("idBRSFilterPaneForm");
-			this.setAdvancedFilterCount(controller, "idBRSFilterPaneAdvL", variantData);
+			let variantDataCount = variantData;
+			this.setAdvancedFilterCount(controller, "idBRSFilterPaneAdvL", variantDataCount);
 			if (filterPaneForm) {
 				filterPaneForm.setBusy(true);
 			}
 			var filterPaneDataModel = new JSONModel();
-			if (variantData && variantData.FilterPanel && variantData.FilterPanel.Fields) {
-				filterPaneDataModel.setData(variantData.FilterPanel.Fields);
-				filterPaneDataModel.setSizeLimit(variantData.FilterPanel.Fields.length);
+			if (variantDataCount && variantDataCount.FilterPanel && variantDataCount.FilterPanel.Fields) {
+				filterPaneDataModel.setData(variantDataCount.FilterPanel.Fields);
+				filterPaneDataModel.setSizeLimit(variantDataCount.FilterPanel.Fields.length);
 				controller.getView().setModel(filterPaneDataModel, "filterPaneDataModel");
 			}
 
@@ -82,6 +83,13 @@ sap.ui.define([
 
 		loadFPDialogData: function (src, controller, multiSelect, bInit) {
 			/*Enable Lazy loading from Dialog based Filters*/
+			//sapServiceURL
+			// : 
+			// "/GW_HEC_HTTP_PRINCIPLE"
+			// serviceURL
+			// : 
+			// "/EZYCOMMERCE_SERVER"
+			//'/EZYCOMMERCE_SERVER_NATIVE/get_data/zsd_cu_orderstatus_cds/'
 			/*Load the Data in select Dialog*/
 			var fltrInfoData = src.data("fltrLoadInfo");
 			var variantData = src.data("variantData");
@@ -97,7 +105,10 @@ sap.ui.define([
 			var queryPath = variantData.ServEntity;
 			var service = variantData.Service.startsWith("/") ? controller.serviceURL + variantData.Service :
 				controller.serviceURL + "/" + variantData.Service;
-
+				//add extra service for nodeJS native:
+			if (queryPath.substring(0,1) === 'z') {
+			service = service.replace("EZYCOMMERCE_SERVER","EZYCOMMERCE_SERVER_NATIVE");
+			}
 			var oFPDiagModel = new ODataModel(service, {
 				json: true,
 				defaultCountMode: sap.ui.model.odata.CountMode.None

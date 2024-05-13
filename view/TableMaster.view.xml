@@ -67,7 +67,7 @@
 									<core:Item key="{variantGroupModel>AppID}" text="{variantGroupModel>AppDescription}"/>
 								</Select>
 								<!--<Label text="Variants"/>-->
-								<Select id="idBRSTableMasterVariantSelect" autoAdjustWidth="true"
+								<Select id="idBRSTableMasterVariantSelectB" autoAdjustWidth="true"
 									items="{path: 'variantModel>/', filters:[{path: 'DisplayType', operator: 'EQ', value1:'table'}]}" change="onVariantChanged" maxWidth="800px" visible="false">
 									<items>
 										<core:Item key="{path: 'variantModel>', formatter: '.variantIDFormatter'}" text="{variantModel>Description}"
