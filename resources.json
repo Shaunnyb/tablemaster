@@ -1,0 +1,258 @@
+{
+    "resources": [
+        {
+            "name": "Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "FilterPane/FilterPane-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "FilterPane/FilterPane.js"
+        },
+        {
+            "name": "FilterPane/FilterUtils-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "FilterPane/FilterUtils.js"
+        },
+        {
+            "name": "controller/ActionClass-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/ActionClass.js"
+        },
+        {
+            "name": "controller/DetailView-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/DetailView.js"
+        },
+        {
+            "name": "controller/TableMaster-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/TableMaster.controller.js"
+        },
+        {
+            "name": "css/style-dbg.css",
+            "isDebug": true
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "fragments/CreateInteraction.fragment.xml"
+        },
+        {
+            "name": "fragments/DetailPopup.fragment.xml"
+        },
+        {
+            "name": "fragments/ExportOptions.fragment.xml"
+        },
+        {
+            "name": "fragments/FilterPane.fragment.xml"
+        },
+        {
+            "name": "fragments/JumpToDialog.fragment.xml"
+        },
+        {
+            "name": "fragments/LongText.fragment.xml"
+        },
+        {
+            "name": "fragments/UserVariantManagement.fragment.xml"
+        },
+        {
+            "name": "fragments/VariantDialog.fragment.xml"
+        },
+        {
+            "name": "fragments/VariantSaveConfirmation.fragment.xml"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "model/Periods.json"
+        },
+        {
+            "name": "model/assetDateData.json"
+        },
+        {
+            "name": "model/longText.json"
+        },
+        {
+            "name": "model/models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "model/woStatus.json"
+        },
+        {
+            "name": "model/woStatusData.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "tmp/Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "tmp/Component.js"
+        },
+        {
+            "name": "tmp/FilterPane/FilterPane.js"
+        },
+        {
+            "name": "tmp/FilterPane/FilterUtils.js"
+        },
+        {
+            "name": "tmp/controller/ActionClass.js"
+        },
+        {
+            "name": "tmp/controller/DetailView.js"
+        },
+        {
+            "name": "tmp/controller/TableMaster.controller.js"
+        },
+        {
+            "name": "tmp/css/style.css"
+        },
+        {
+            "name": "tmp/fragments/CreateInteraction.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/DetailPopup.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/ExportOptions.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/FilterPane.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/JumpToDialog.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/LongText.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/UserVariantManagement.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/VariantDialog.fragment.xml"
+        },
+        {
+            "name": "tmp/fragments/VariantSaveConfirmation.fragment.xml"
+        },
+        {
+            "name": "tmp/i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "tmp/index.html"
+        },
+        {
+            "name": "tmp/manifest.json"
+        },
+        {
+            "name": "tmp/model/Periods.json"
+        },
+        {
+            "name": "tmp/model/assetDateData.json"
+        },
+        {
+            "name": "tmp/model/longText.json"
+        },
+        {
+            "name": "tmp/model/models.js"
+        },
+        {
+            "name": "tmp/model/woStatus.json"
+        },
+        {
+            "name": "tmp/model/woStatusData.json"
+        },
+        {
+            "name": "tmp/utilities/Controls.js"
+        },
+        {
+            "name": "tmp/utilities/Utilities.js"
+        },
+        {
+            "name": "tmp/view/TableMaster.view.xml"
+        },
+        {
+            "name": "tmp-dbg/Component.js"
+        },
+        {
+            "name": "tmp-dbg/FilterPane/FilterPane.js"
+        },
+        {
+            "name": "tmp-dbg/FilterPane/FilterUtils.js"
+        },
+        {
+            "name": "tmp-dbg/controller/ActionClass.js"
+        },
+        {
+            "name": "tmp-dbg/controller/DetailView.js"
+        },
+        {
+            "name": "tmp-dbg/controller/TableMaster.controller.js"
+        },
+        {
+            "name": "tmp-dbg/css/style.css"
+        },
+        {
+            "name": "tmp-dbg/model/models.js"
+        },
+        {
+            "name": "tmp-dbg/utilities/Controls.js"
+        },
+        {
+            "name": "tmp-dbg/utilities/Utilities.js"
+        },
+        {
+            "name": "utilities/Controls-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "utilities/Controls.js"
+        },
+        {
+            "name": "utilities/Utilities-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "utilities/Utilities.js"
+        },
+        {
+            "name": "view/TableMaster.view.xml"
+        }
+    ]
+}
